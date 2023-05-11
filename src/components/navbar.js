@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import GoogleSignin from "../img/btn_google_signin_dark_pressed_web.png";
 import { auth } from "../firebase";
+import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 
@@ -34,10 +35,10 @@ const NavBar = () => {
             <div className="container-fluid">
                 <a className="navbar-brand" href="#">Offcanvas dark navbar</a>
                     <div className="navbar-nav ms-auto mx-2">
-                        <a className="nav-link text-end" href="/cart">
+                        <Link to={`/cart`} className="nav-link text-end" href="/cart">
                         <i className="bi bi-cart-fill me-2"></i>
                         {getTotalQuantity() || 0}
-                        </a>
+                        </Link>
                     </div>
                     {user ? (
                     <button onClick={signOut} className="sign-out" type="button">
