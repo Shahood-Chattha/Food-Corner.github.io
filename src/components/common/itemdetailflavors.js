@@ -54,8 +54,8 @@ const ItemDetailFlavors = ({ item }) => {
 
     return (
         <div className="product-detail text-white p-5 d-flex">
-            <div className="rounded" style={{width: "25rem", height: "25rem"}} >
-                <img src={activeFlavorIdCallFix < 1 ? image : imageUrl} alt={item.attributes.name} />
+            <div className="rounded" >
+                <img src={activeFlavorIdCallFix < 1 ? image : imageUrl} alt={item.attributes.name} width={250} />
             </div>
             <div className="product-detail-content p-2 px-4">
                 <h2>{item.attributes.name}</h2>
@@ -72,6 +72,7 @@ const ItemDetailFlavors = ({ item }) => {
                         </button>
                     ))}
                 </div>
+                <br/>
                 <div className="btn-group my-2" role="group" aria-label="Flavors">
                     {itemsSizes.map((size, index) => (
                         <button
