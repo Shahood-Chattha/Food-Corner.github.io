@@ -54,7 +54,7 @@ const ItemDetailFlavors = ({ item }) => {
 
     return (
         <div className="product-detail text-white p-5 d-flex">
-            <div className="rounded" style={{width: "20rem", height: "20rem"}} >
+            <div className="rounded" style={{width: "25rem", height: "25rem"}} >
                 <img src={activeFlavorIdCallFix < 1 ? image : imageUrl} alt={item.attributes.name} />
             </div>
             <div className="product-detail-content p-2 px-4">
