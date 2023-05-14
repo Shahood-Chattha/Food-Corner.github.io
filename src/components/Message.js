@@ -8,26 +8,27 @@ const Message = ({ message }) => {
   const [user] = useAuthState(auth);
   const time = new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+  let userSeenIcon;
+  if (message.senderId === user.uid) {
+    if (message.userIISee) {
+      userSeenIcon = <FontAwesomeIcon icon={faCheckDouble} style={{color: 'blue'}} />;
+    } else {
+      userSeenIcon = <FontAwesomeIcon icon={faCheckDouble} style={{color: 'grey'}} />;
+    }
+  } else {
+    userSeenIcon = null;
+  }
 
-  const userSeenIcon = message.senderId === user.uid ? (
-    message.userIISee ? ( 
-      <FontAwesomeIcon icon={faCheckDouble} style={{color: 'blue'}} />
-    ) : ( 
-      <FontAwesomeIcon icon={faCheckDouble} style={{color: 'grey'}} />
-    )
-  ) : (
-    null
-  )
-
-  const operatorSeenIcon = message.senderId === user.uid ? (
-    message.userISee ? (
-      <FontAwesomeIcon icon={faCheckDouble} style={{color: 'blue'}} />
-    ) : (
-      <FontAwesomeIcon icon={faCheckDouble} style={{color: 'grey'}} />
-    )
-  ) : (
-    null
-  );
+  let operatorSeenIcon;
+  if (message.senderId === user.uid) {
+    if (message.userISee) {
+      operatorSeenIcon = <FontAwesomeIcon icon={faCheckDouble} style={{color: 'blue'}} />;
+    } else {
+      operatorSeenIcon = <FontAwesomeIcon icon={faCheckDouble} style={{color: 'grey'}} />;
+    }
+  } else {
+    operatorSeenIcon = null;
+  }
 
   return (
     <div

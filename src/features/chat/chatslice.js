@@ -126,7 +126,7 @@ export const addUserParticipant = ({ chatId, participantId, avatar, name }) => {
       name,
     };
     const participantRef = ref(db, `chats/${chatId}/participants/${participantId}`);
-    update(participantRef, true)
+    set(participantRef, true)
       .then(() => {
       set(newChatRef, newChat);
       dispatch(addParticipantSuccess());
@@ -140,7 +140,7 @@ export const addUserParticipant = ({ chatId, participantId, avatar, name }) => {
 export const addOperatorParticipant = ({ chatId, participantId }) => {
   return (dispatch) => {
     const participantRef = ref(db, `chats/${chatId}/participants/${participantId}`);
-    update(participantRef, true)
+    set(participantRef, true)
       .then(() => {
       dispatch(addParticipantSuccess());
       })

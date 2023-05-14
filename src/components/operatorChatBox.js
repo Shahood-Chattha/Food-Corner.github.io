@@ -26,12 +26,12 @@ const OperatorChatBox = ({ chatId }) => {
 
   return (
     <div className="messages-wrapper overflow position-relative" style={{ height: "calc(100vh - 50px)", width: "100%" }}>
-      <div className="overflow-y-auto mx-4" style={{ maxHeight: "calc(100vh - 200px)", width: "100%" }}>
+      <div className="overflow-y-auto px-2" style={{ maxHeight: "calc(100vh - 200px)", width: "100%" }}>
         {messages?.map((message) => (
           <Message key={message.id} message={message} />
         ))}
       </div>
-      <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x w-100 my-2">
+      <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x w-100 mb-2">
         <div className="container mx-auto">
           <SendMessage chatId={chatId} />
         </div>

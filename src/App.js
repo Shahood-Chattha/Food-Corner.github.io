@@ -14,7 +14,7 @@ import ItemPage from './pages/itempage.js';
 import OperatorChatPage from './pages/operatorChatPage';
 
 function App() {
-  const [user] = useAuthState(auth);
+  const [user, Loading] = useAuthState(auth);
   const location = useLocation();
   const generateChatId = (userId) => {
     return `chatId_${userId}`;
@@ -24,10 +24,14 @@ function App() {
   return (
     <div className="App pt-5">
       <NavBar />
-      {location.pathname !== '/operatorchat' && !user && <Welcome />}
-      {location.pathname !== '/operatorchat' && user && (
+      {Loading ? <div>loading...</div> : (
         <>
-          <ChatBox chatId={chatId} />
+          {location.pathname !== '/operatorchat' && !user && <Welcome />}
+            {location.pathname !== '/operatorchat' && user && (
+              <>
+                <ChatBox chatId={chatId} />
+              </>
+          )}
         </>
       )}
       <Routes>
@@ -38,7 +42,7 @@ function App() {
         <>
           <OperatorChatPage />
         </>
-      ) : <></>} />
+      ) : null} />
       </Routes>
       <Footer />
     </div>
