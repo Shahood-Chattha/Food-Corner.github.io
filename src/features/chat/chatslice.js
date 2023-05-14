@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ref, push, set, onValue, update, remove } from "firebase/database";
+import { ref, push, set, onValue, update } from "firebase/database";
 
 import { db } from '../../firebase.js';
 
@@ -96,7 +96,7 @@ export const fetchMessages = ( chatId ) => {
   };
 };
 
-export const addMessage = ({ chatId, messageText, avatar, name, createdAt, uid, userISee, userIISee }) => {
+export const addMessage = ({ chatId, messageText, avatar, name, createdAt, uid, userISeen, userIISeen }) => {
   return (dispatch) => {
     const messagesRef = ref(db, `chats/${chatId}/messages`);
     const newMessageRef = push(messagesRef);
@@ -106,8 +106,8 @@ export const addMessage = ({ chatId, messageText, avatar, name, createdAt, uid, 
       avatar: avatar,
       name: name,
       timestamp: createdAt,
-      userISee,
-      userIISee
+      userISeen,
+      userIISeen
     };
     update(newMessageRef, newMessage)
       .then(() => {

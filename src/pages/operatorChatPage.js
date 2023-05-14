@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 
 import { deleteInvalidMessages } from '../features/chat/chatOperatorSlice';
+import { markMessageAsuserIISeen } from '../features/chat/chatslice';
 import OperatorChatBox from "../components/operatorChatBox";
 import OperatorChatNavigator from "../components/operatorChatNavigator";
 
 const OperatorChatPage = () => {
   const dispatch = useDispatch();
+  const messages = useSelector((state) => state.chat.messages);
   const [chatId, setChatId] = useState("chatId1");
+  const prevMessages = useRef([]);
 
   useEffect(() => {
     dispatch(deleteInvalidMessages(chatId));
   }, [dispatch, chatId]);
 
   const handleChatSelect = (selectedChatId) => {
+    messages.forEach(message => {
+      const messageId = message.id
+      dispatch(markMessageAsuserIISeen({ chatId, messageId: messageId, userIISeen: true}))
+      prevMessages.current = messages;
+    });
     setChatId(selectedChatId);
   };
 

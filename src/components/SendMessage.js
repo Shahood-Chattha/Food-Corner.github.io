@@ -28,8 +28,8 @@ const SendMessage = ({ chatId, scroll }) => {
       avatar: photoURL,
       createdAt: serverTimestamp(),
       uid,
-      userISee: false,
-      userIISee: false
+      userISeen: false,
+      userIISeen: false
     }));
     if(!participantAdded) {
       dispatch(addUserParticipant({ chatId, participantId: uid, avatar: photoURL, name: displayName, }));

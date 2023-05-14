@@ -17,19 +17,16 @@ const ChatBox = ({ chatId }) => {
   }, [dispatch, chatId]);
 
   const handleDeleteInvalidMessages =() => {
+    messages.forEach(message => {
+      const messageId = message.id
+      dispatch(markMessageAsuserISeen({ chatId, messageId: messageId, userISeen: true}))
+    });
     dispatch(deleteInvalidMessages(chatId));
   }
 
   const handleReload = () => {
     dispatch(fetchMessages(chatId));
   };
-
-  useEffect(() => {
-    messages.forEach(message => {
-      const messageId = message.id
-      dispatch(markMessageAsuserISeen({ chatId, messageId: messageId, userISeen: true}))
-    });
-  }, [messages, dispatch, chatId]);
 
   return (
     <>

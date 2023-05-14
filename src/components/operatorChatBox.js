@@ -5,13 +5,12 @@ import "./operatorChatBoxStyle.css";
 import { deleteInvalidMessages } from '../features/chat/chatOperatorSlice';
 import Message from "./Message";
 import SendMessage from "./SendMessage";
-import { fetchMessages, markMessageAsuserIISeen } from '../features/chat/chatslice';
+import { fetchMessages } from '../features/chat/chatslice';
 
 const OperatorChatBox = ({ chatId }) => {
   const scroll = useRef();
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.chat.messages);
-  const prevMessages = useRef([]);
 
   useEffect(() => {
     dispatch(deleteInvalidMessages(chatId));
@@ -20,14 +19,6 @@ const OperatorChatBox = ({ chatId }) => {
   useEffect(() => {
     dispatch(fetchMessages(chatId));
   }, [dispatch, chatId]);
-
-  useEffect(() => {
-    messages.forEach(message => {
-      const messageId = message.id
-      dispatch(markMessageAsuserIISeen({ chatId, messageId: messageId, userIISeen: true}))
-      prevMessages.current = messages;
-    });
-  }, [dispatch, chatId, messages, prevMessages]);
 
   return (
     <div className="messages-wrapper overflow position-relative" style={{ height: "calc(100vh - 50px)", width: "100%" }}>
