@@ -72,7 +72,7 @@ const NavBar = () => {
                     <li className="nav-item">
                         <a className="nav-link" href="#">Link</a>
                     </li>
-                    {user?.uid === "SY0Kw0dqeReO6CqOy4mCFmxUXVf1" ? (
+                    {user?.email === "chatthashahood309@gmail.com" ? (
                     <li className="nav-item">
                         <Link className="nav-link" to="/operatorchat" >OperatorChat</Link>
                     </li>
