@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, get, remove } from "firebase/database";
 
 import { db } from '../../firebase.js';
 
@@ -55,4 +55,34 @@ export const fetchChats = () => {
     });
   };
 };
+
+export const deleteInvalidMessages = (chatId) => {
+  return () => {
+    const messagesRef = ref(db, `chats/${chatId}/messages`);
+    get(messagesRef).then((snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        const message = childSnapshot.val();
+        if (!message.name || !message.avatar || !message.senderId || !message.text) {
+          remove(childSnapshot.ref)
+          .catch((error) => {
+            console.error(`Error deleting message ${childSnapshot.key}: `, error);
+          });
+        }
+      });
+    }).catch((error) => {
+      console.error("Error fetching messages: ", error);
+    });
+  };
+};
+
+export const deleteUserMessage = ({ messageId, chatId }) => {
+  return () => {
+    const messageRef = ref(db, `chats/${chatId}/messages/${messageId}`);
+    remove(messageRef)
+    .catch((error) => {
+      console.error("Error deleting message: ", error);
+    });
+  }
+}
+
 

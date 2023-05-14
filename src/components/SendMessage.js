@@ -9,6 +9,8 @@ import { addMessage, addUserParticipant, addOperatorParticipant } from '../featu
 const SendMessage = ({ chatId, scroll }) => {
   const location = useLocation();
   const [message, setMessage] = useState("");
+  const [participantAdded, setparticipantAdded] = useState(false);
+  const [operatorParticipantAdded, setOperatorParticipantAdded] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -25,12 +27,17 @@ const SendMessage = ({ chatId, scroll }) => {
       name: displayName,
       avatar: photoURL,
       createdAt: serverTimestamp(),
-      uid, 
+      uid,
+      userISee: false,
+      userIISee: false
     }));
-    if(location.pathname === '/operatorchat') {
-      dispatch(addOperatorParticipant({ chatId, participantId: uid}));
-    } else {
+    if(!participantAdded) {
       dispatch(addUserParticipant({ chatId, participantId: uid, avatar: photoURL, name: displayName, }));
+      setparticipantAdded(true);
+    }
+    if(location.pathname === "/operatorchat" && !operatorParticipantAdded) {
+      dispatch(addOperatorParticipant({ chatId, participantId: uid, avatar: photoURL, name: displayName, }));
+      setOperatorParticipantAdded(true);
     }
     setMessage("");
     if(location.pathname !== '/operatorchat') {

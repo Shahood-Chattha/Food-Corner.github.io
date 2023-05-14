@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ref, push, set, onValue, update } from "firebase/database";
+import { ref, push, set, onValue, update, remove } from "firebase/database";
 
 import { db } from '../../firebase.js';
 
@@ -96,7 +96,7 @@ export const fetchMessages = ( chatId ) => {
   };
 };
 
-export const addMessage = ({ chatId, messageText, avatar, name, createdAt, uid }) => {
+export const addMessage = ({ chatId, messageText, avatar, name, createdAt, uid, userISee, userIISee }) => {
   return (dispatch) => {
     const messagesRef = ref(db, `chats/${chatId}/messages`);
     const newMessageRef = push(messagesRef);
@@ -106,6 +106,8 @@ export const addMessage = ({ chatId, messageText, avatar, name, createdAt, uid }
       avatar: avatar,
       name: name,
       timestamp: createdAt,
+      userISee,
+      userIISee
     };
     update(newMessageRef, newMessage)
       .then(() => {
@@ -150,28 +152,25 @@ export const addOperatorParticipant = ({ chatId, participantId }) => {
   };
 };
 
-export const markMessageAsuserIISeen = ({ chatId, messageId,  userIISeen }) => {
-  return (dispatch) => {
+export const markMessageAsuserIISeen = ({ chatId, messageId, userIISeen }) => {
+  return () => {
     const messageRef = ref(db, `chats/${chatId}/messages/${messageId}`);
-    update(messageRef, {  userIISeen })
-      .then(() => {
-        dispatch(addMessageSuccess());
-      })
+    update(messageRef, { userIISeen })
       .catch((error) => {
-        dispatch(addMessageSuccess(error.message));
+        console.log(`Error updating message with ID ${messageId}: ${error.message}`);
       })
   };
 };
 
+
 export const markMessageAsuserISeen = ({ chatId, messageId,  userISeen }) => {
-  return (dispatch) => {
+  return () => {
     const messageRef = ref(db, `chats/${chatId}/messages/${messageId}`);
     update(messageRef, {  userISeen })
-      .then(() => {
-        dispatch(addMessageSuccess());
-      })
       .catch((error) => {
-        dispatch(addMessageSuccess(error.message));
+        console.log(`Error updating message with ID ${messageId}: ${error.message}`);
       })
   };
 };
+
+

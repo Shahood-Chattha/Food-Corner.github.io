@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
 
+import { deleteInvalidMessages } from '../features/chat/chatOperatorSlice';
 import OperatorChatBox from "../components/operatorChatBox";
 import OperatorChatNavigator from "../components/operatorChatNavigator";
 
 const OperatorChatPage = () => {
+  const dispatch = useDispatch();
   const [chatId, setChatId] = useState("chatId1");
 
+  useEffect(() => {
+    dispatch(deleteInvalidMessages(chatId));
+  }, [dispatch, chatId]);
 
   const handleChatSelect = (selectedChatId) => {
     setChatId(selectedChatId);

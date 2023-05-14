@@ -5,6 +5,7 @@ import { FaComments } from 'react-icons/fa';
 import Message from "./Message";
 import SendMessage from "./SendMessage";
 import { fetchMessages,  markMessageAsuserISeen } from '../features/chat/chatslice';
+import { deleteInvalidMessages } from '../features/chat/chatOperatorSlice';
 
 const ChatBox = ({ chatId }) => {
   const scroll = useRef();
@@ -14,6 +15,14 @@ const ChatBox = ({ chatId }) => {
   useEffect(() => {
     dispatch(fetchMessages(chatId));
   }, [dispatch, chatId]);
+
+  const handleDeleteInvalidMessages =() => {
+    dispatch(deleteInvalidMessages(chatId));
+  }
+
+  const handleReload = () => {
+    dispatch(fetchMessages(chatId));
+  };
 
   useEffect(() => {
     messages.forEach(message => {
@@ -25,7 +34,7 @@ const ChatBox = ({ chatId }) => {
   return (
     <>
       {/* Chat Button */}
-      <button type="button" className="btn btn-primary z-3 position-fixed bottom-0 start-0 m-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      <button type="button" className="btn btn-primary z-3 position-fixed bottom-0 start-0 m-3" onClick={handleDeleteInvalidMessages} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         <FaComments />
       </button>
       {/* Chat Model  */}
@@ -38,8 +47,9 @@ const ChatBox = ({ chatId }) => {
             </div>
             <div className="modal-body">
               <div className="messages-wrapper">
+                {messages.length === 0 ? ( <div className="d-flex justify-content-center btn btn-outline-info" onClick={handleReload}>Reload</div> ) : null}
                 {messages?.map((message) => (
-                  <Message key={message.id} message={message} />
+                  <Message key={message.id} message={message} chatId={chatId} />
                 ))}
                 <span ref={scroll}></span>
               </div>
