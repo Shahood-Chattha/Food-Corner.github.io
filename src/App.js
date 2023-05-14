@@ -34,7 +34,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/item/:productId" element={<ItemPage />} />
-        <Route path="/operatorchat" element={user?.uid === "SY0Kw0dqeReO6CqOy4mCFmxUXVf1" ? (
+        <Route path="/operatorchat" element={user?.email === "chatthashahood309@gmail.com" ? (
         <>
           <OperatorChatPage />
         </>
