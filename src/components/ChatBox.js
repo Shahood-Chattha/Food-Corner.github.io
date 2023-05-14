@@ -1,35 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  query,
-  collection,
-  orderBy,
-  onSnapshot,
-  limit,
-} from "firebase/firestore";
-import { db } from "../firebase";
-import Message from "./Message";
-import SendMessage from "./SendMessage";
+import React, { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import { FaComments } from 'react-icons/fa';
 
-const ChatBox = () => {
+import Message from "./Message";
+import SendMessage from "./SendMessage";
+import { fetchMessages,  markMessageAsuserISeen } from '../features/chat/chatslice';
+
+const ChatBox = ({ chatId }) => {
   const scroll = useRef();
-  const [messages, setMessages] = useState([]);
+  const dispatch = useDispatch();
+  const messages = useSelector((state) => state.chat.messages);
   
   useEffect(() => {
-    const q = query(
-      collection(db, "messages"),
-      orderBy("createdAt"),
-      limit(50)
-    );
-    const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
-      let messages = [];
-      QuerySnapshot.forEach((doc) => {
-        messages.push({ ...doc.data(), id: doc.id });
-      });
-      setMessages(messages);
+    dispatch(fetchMessages(chatId));
+  }, [dispatch, chatId]);
+
+  useEffect(() => {
+    messages.forEach(message => {
+      const messageId = message.id
+      dispatch(markMessageAsuserISeen({ chatId, messageId: messageId, userISeen: true}))
     });
-    return () => unsubscribe();
-  }, []);
+  }, [messages, dispatch, chatId]);
 
   return (
     <>
@@ -54,7 +45,8 @@ const ChatBox = () => {
               </div>
             </div>
             <div className="modal-footer">
-              <SendMessage scroll={scroll} />
+              <span ref={scroll}></span>
+              <SendMessage chatId={chatId} scroll={scroll}/>
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
           </div>

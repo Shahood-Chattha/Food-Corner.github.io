@@ -1,15 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { cartReducer } from "../features/cart/cartslice";
-import { fetchProducts } from "../features/product/productslice";
-import productReducer from "../features/product/productslice";
-import { fetchVariants } from "../features/product/variantslice";
-import variantReducer from "../features/product/variantslice";
-import { fetchFlavors } from "../features/product/flavorslice";
-import flavorReducer from "../features/product/flavorslice";
-import { fetchDeals } from "../features/product/dealslice";
-import dealReducer from "../features/product/dealslice";
-import { fetchItems } from "../features/product/itemslice";
-import itemReducer from "../features/product/itemslice";
+import productReducer, { fetchProducts } from "../features/product/productslice";
+import variantReducer, { fetchVariants } from "../features/product/variantslice";
+import flavorReducer, { fetchFlavors } from "../features/product/flavorslice";
+import chatReducer, { fetchMessages } from "../features/chat/chatslice";
+import chatOperatorReducer, { fetchChats } from "../features/chat/chatOperatorSlice";
+import dealReducer, { fetchDeals } from "../features/product/dealslice";
+import itemReducer, { fetchItems } from "../features/product/itemslice";
 import storage from 'redux-persist/lib/storage';
 import {
   persistStore,
@@ -34,7 +31,9 @@ export const store = configureStore({
     reducer: {
         cart: persistedReducer,
         product: productReducer,
+        chatOperator: chatOperatorReducer,
         variant: variantReducer,
+        chat: chatReducer,
         item: itemReducer,
         flavor: flavorReducer,
         deal: dealReducer,
@@ -49,6 +48,8 @@ export const store = configureStore({
 
 store.dispatch(fetchProducts());
 store.dispatch(fetchVariants());
+store.dispatch(fetchChats());
+store.dispatch(fetchMessages());
 store.dispatch(fetchFlavors());
 store.dispatch(fetchItems());
 store.dispatch(fetchDeals());

@@ -1,26 +1,41 @@
 import React, { useState } from "react";
-import { auth, db } from "../firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { serverTimestamp } from "firebase/database";
+import { useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-const SendMessage = ({ scroll }) => {
+import { auth } from "../firebase";
+import { addMessage, addUserParticipant, addOperatorParticipant } from '../features/chat/chatslice';
+
+const SendMessage = ({ chatId, scroll }) => {
+  const location = useLocation();
   const [message, setMessage] = useState("");
 
-  const sendMessage = async (event) => {
+  const dispatch = useDispatch();
+
+  const sendMessage = (event) => {
     event.preventDefault();
     if (message.trim() === "") {
       alert("Enter valid message");
       return;
     }
     const { uid, displayName, photoURL } = auth.currentUser;
-    await addDoc(collection(db, "messages"), {
-      text: message,
+    dispatch(addMessage({
+      chatId,
+      messageText: message,
       name: displayName,
       avatar: photoURL,
       createdAt: serverTimestamp(),
-      uid,
-    });
+      uid, 
+    }));
+    if(location.pathname === '/operatorchat') {
+      dispatch(addOperatorParticipant({ chatId, participantId: uid}));
+    } else {
+      dispatch(addUserParticipant({ chatId, participantId: uid, avatar: photoURL, name: displayName, }));
+    }
     setMessage("");
-    scroll.current.scrollIntoView({ behavior: "smooth" });
+    if(location.pathname !== '/operatorchat') {
+      scroll.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (

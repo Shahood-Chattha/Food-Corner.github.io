@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import GoogleSignin from "../img/btn_google_signin_dark_pressed_web.png";
 import { auth } from "../firebase";
@@ -72,6 +72,11 @@ const NavBar = () => {
                     <li className="nav-item">
                         <a className="nav-link" href="#">Link</a>
                     </li>
+                    {user?.uid === "SY0Kw0dqeReO6CqOy4mCFmxUXVf1" ? (
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/operatorchat" >OperatorChat</Link>
+                    </li>
+                    ) : <></>}
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Dropdown
