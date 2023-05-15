@@ -45,7 +45,7 @@ const OperatorChatNavigator = ({ onChatSelect }) => {
                     <div className="d-flex align-items-center position-relative">
                       <img className="chat-bubble__avatar rounded-circle mr-2" src={chat.attributes?.avatar} alt="avatar" style={{ height: "35px", width: "35px" }} />
                       <div className="position-absolute" style={{ left: "-20px" }}>
-                        {hasUnreadMessages && <FontAwesomeIcon icon={faBell} className="text-danger m-0 p-0" size="md" />}
+                        {hasUnreadMessages && <FontAwesomeIcon icon={faBell} className="text-danger m-0 p-0" />}
                       </div>
                       <p className="mb-0 text-truncate overflow-x-hidden">{chat.attributes?.name}</p>
                       {hasUnreadMessages && <span className="ml-2"><i className="fa fa-bell text-danger"></i></span>}

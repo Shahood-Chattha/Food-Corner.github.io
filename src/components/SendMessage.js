@@ -9,6 +9,7 @@ import { addMessage, addUserParticipant, addOperatorParticipant } from '../featu
 const SendMessage = ({ chatId }) => {
   const location = useLocation();
   const [message, setMessage] = useState("");
+  const [userISeen, setUserISeen] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -17,7 +18,12 @@ const SendMessage = ({ chatId }) => {
     if (message.trim() === "") {
       alert("Enter valid message");
       return;
-    }
+    };
+    if(location.pathname !== "/operatorchat") {
+      setUserISeen(false);
+    }else {
+      setUserISeen(true);
+    };
     const { uid, displayName, photoURL } = auth.currentUser;
     dispatch(addMessage({
       chatId,
@@ -26,7 +32,7 @@ const SendMessage = ({ chatId }) => {
       avatar: photoURL,
       createdAt: serverTimestamp(),
       uid,
-      userISeen: false,
+      userISeen,
       userIISeen: false
     }));
     if(location.pathname === "/operatorchat") {
