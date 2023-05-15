@@ -6,11 +6,9 @@ import { useDispatch } from 'react-redux';
 import { auth } from "../firebase";
 import { addMessage, addUserParticipant, addOperatorParticipant } from '../features/chat/chatslice';
 
-const SendMessage = ({ chatId, scroll }) => {
+const SendMessage = ({ chatId }) => {
   const location = useLocation();
   const [message, setMessage] = useState("");
-  const [participantAdded, setparticipantAdded] = useState(false);
-  const [operatorParticipantAdded, setOperatorParticipantAdded] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -31,18 +29,12 @@ const SendMessage = ({ chatId, scroll }) => {
       userISeen: false,
       userIISeen: false
     }));
-    if(!participantAdded) {
+    if(location.pathname === "/operatorchat") {
+      dispatch(addOperatorParticipant({ chatId, participantId: uid }));
+    }else {
       dispatch(addUserParticipant({ chatId, participantId: uid, avatar: photoURL, name: displayName, }));
-      setparticipantAdded(true);
-    }
-    if(location.pathname === "/operatorchat" && !operatorParticipantAdded) {
-      dispatch(addOperatorParticipant({ chatId, participantId: uid, avatar: photoURL, name: displayName, }));
-      setOperatorParticipantAdded(true);
     }
     setMessage("");
-    if(location.pathname !== '/operatorchat') {
-      scroll.current.scrollIntoView({ behavior: "smooth" });
-    }
   };
 
   return (

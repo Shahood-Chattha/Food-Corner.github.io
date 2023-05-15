@@ -9,7 +9,7 @@ import { deleteInvalidMessages } from '../features/chat/chatOperatorSlice';
 import { deleteUserMessage } from '../features/chat/chatOperatorSlice';
 import { auth } from "../firebase";
 
-const Message = ({ message, chatId }) => {
+const Message = ({ message, chatId, scroll }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const [user] = useAuthState(auth);
@@ -17,11 +17,12 @@ const Message = ({ message, chatId }) => {
 
   useEffect(() => {
     dispatch(deleteInvalidMessages(chatId));
-  }, [dispatch, chatId]);
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  }, [dispatch, chatId, scroll]);
 
   let userSeenIcon;
   if (message.senderId === user.uid) {
-    if (!message.senderId === user.uid && (message.userIISeen || message.userISeen)) {
+    if (message.senderId === user.uid && (message.userIISeen && message.userISeen)) {
       userSeenIcon = <FontAwesomeIcon icon={faCheckDouble} style={{color: 'blue'}} />;
     } else {
       userSeenIcon = <FontAwesomeIcon icon={faCheckDouble} style={{color: 'grey'}} />;
@@ -55,7 +56,7 @@ const Message = ({ message, chatId }) => {
               />
             </div>
           )}
-          <div className="d-flex justify-content-end">
+          <div className="d-flex flex-grow-1 justify-content-end">
             <p className="message-time mb-0 mr-1">{time}</p>
             {userSeenIcon}
           </div>

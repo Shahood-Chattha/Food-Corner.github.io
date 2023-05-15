@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { deleteInvalidMessages } from '../features/chat/chatOperatorSlice';
-import { markMessageAsuserIISeen } from '../features/chat/chatslice';
+import { markMessageAsuserISeen } from '../features/chat/chatslice';
 import OperatorChatBox from "../components/operatorChatBox";
 import OperatorChatNavigator from "../components/operatorChatNavigator";
 
 const OperatorChatPage = () => {
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.chat.messages);
-  const [chatId, setChatId] = useState("chatId1");
+  const [chatId, setChatId] = useState(null);
   const prevMessages = useRef([]);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const OperatorChatPage = () => {
   const handleChatSelect = (selectedChatId) => {
     messages.forEach(message => {
       const messageId = message.id
-      dispatch(markMessageAsuserIISeen({ chatId, messageId: messageId, userIISeen: true}))
+      dispatch(markMessageAsuserISeen({ chatId, messageId: messageId, userISeen: true}))
       prevMessages.current = messages;
     });
     setChatId(selectedChatId);

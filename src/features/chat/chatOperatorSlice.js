@@ -85,4 +85,12 @@ export const deleteUserMessage = ({ messageId, chatId }) => {
   }
 }
 
-
+export const deleteChat = (chatId) => {
+  return () => {
+    const chatRef = ref(db, `chats/${chatId}`);
+    remove(chatRef)
+    .catch((error) => {
+      console.error("Error removing chat: ", error);
+    });
+  }
+};
