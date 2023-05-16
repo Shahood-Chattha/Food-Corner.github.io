@@ -1,11 +1,11 @@
 import React from "react";
-import { auth } from "../firebase";
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const SignInBanner = () => {
+  const navigate = useNavigate();
+
   const googleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider);
+    navigate("/login_page");
   };
 
   return (
