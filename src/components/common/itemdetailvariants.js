@@ -1,21 +1,23 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import { addToCart } from '../../features/cart/cartslice';
 
 const ItemDetailVariants = ({ item }) => {
-    const { productId } = useParams();
+    const dispatch = useDispatch();
     const [activeVariantIndex, setActiveVariantIndex] = useState(0);
     const [activeVariantIdCall, setActiveVariantIdCall] = useState(1);
     const [activeVariantIdCallFix, setActiveVariantIdCallFix] = useState(0);
-    const dispatch = useDispatch();
+    
     const itemsVariants = item.attributes.variants.data;
     const activeVariant = itemsVariants[activeVariantIndex];
+
     const variants = useSelector((state) => state.variant.variants[activeVariantIdCall - 1]);
+
     const image = `http://localhost:1337${item.attributes.image.data[0].attributes?.url}`;
     const imageUrl = `http://localhost:1337${variants.attributes.image.data[0].attributes?.url}`;
+    
     const priceInPKR = (activeVariant?.attributes.price || item.attributes.price).toLocaleString("en-PK", {
         style: "currency",
         currency: "PKR",

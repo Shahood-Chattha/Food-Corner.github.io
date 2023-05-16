@@ -32,7 +32,7 @@ const OperatorChatPage = () => {
       };
     };
     prevMessages.current = messages;
-  }, [messages]);
+  }, [messages, lastMessageId, location]);
 
   const handleChatSelect = (selectedChatId) => {
     messages.forEach(message => {

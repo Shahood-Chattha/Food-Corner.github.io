@@ -25,7 +25,7 @@ const CartContainer = () => {
 
     if(cart.length < 1){
         return (
-            <section className="bg-secondary cart py-3">
+            <section className="bg-secondary cart py-3 text-white">
                 <header>
                     <h2 className="py-2 mx-5">Your Cart</h2>
                     <h4 className="empty-cart mx-5"> is currently empty</h4>
@@ -36,7 +36,7 @@ const CartContainer = () => {
 
     return (
         <div>
-            <section className="bg-secondary cart py-3">
+            <section className="bg-secondary cart py-3 text-white">
                 <header className="pb-2">
                     <h2 className="py-2 mx-5">Your Cart</h2>
                 </header>

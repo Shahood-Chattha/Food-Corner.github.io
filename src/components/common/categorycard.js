@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CategoryCard = ({ item, image, name }) => {
   return (
-    <Link to={`/item/${item.id}`} className="text-decoration-none m-4 icon-link icon-link-hover" style={{ transform: 'var(--bs-icon-link-transform)' }}>
+    <Link to={`/item/${item.attributes.items.data[0].id}`} className="text-decoration-none m-4 icon-link icon-link-hover" style={{ transform: 'var(--bs-icon-link-transform)' }}>
       <div className="card bg-transparent" style={{ Width: "18rem", Height: "18rem" }}>
         <div className="position-relative">
           <img

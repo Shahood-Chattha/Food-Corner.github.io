@@ -5,9 +5,13 @@ import DealsCarousel from "../components/dealscarousel";
 
 const Home = () => {
     return (
-        <div className="bg-secondary">
-            <DealsCarousel />
-            <ProductsList />
+        <div className="" style={{ backgroundColor: "#616161"}}>
+            <div className="mx-5 px-5 z-1">
+                <DealsCarousel />
+            </div>
+            <div className="d-flex justify-content-center text-black">
+                    <ProductsList />
+            </div>
         </div>
     )
 }

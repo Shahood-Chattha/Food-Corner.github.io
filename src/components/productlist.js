@@ -11,7 +11,7 @@ function ProductsList() {
   }
 
   return (
-    <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-evenly">
+    <div className="d-flex justify-content-evenly">
       {products.map((item) => {
         return (
           <div className="col mb-4" key={item.id}>
